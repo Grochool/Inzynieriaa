@@ -245,21 +245,21 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 					&& WykresSlupkowy.isSelected() == false) {
 				JOptionPane.showMessageDialog(null, "Zaznacz jakaœ opcje!!! ");
 			} else {
-				Document document = new Document();
-				PdfWriter writer = null;
-				try {
-					writer = PdfWriter.getInstance(document,
-							new FileOutputStream("C:\\Users\\komputer\\Desktop\\sample1.pdf"));
-				} catch (FileNotFoundException e1) {
-					// writer=TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (DocumentException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				document.open();
-				if (Tabela.isSelected() == true) {
 
+				if (Tabela.isSelected() == true) {
+					Document document = new Document();
+					PdfWriter writer = null;
+					try {
+						writer = PdfWriter.getInstance(document,
+								new FileOutputStream("C:\\Users\\komputer\\Desktop\\sample1.pdf"));
+					} catch (FileNotFoundException e1) {
+						// writer=TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (DocumentException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					document.open();
 					try {
 						document.add(makeTable());
 					} catch (DocumentException e1) {
@@ -268,8 +268,9 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 					}
 
 					System.out.println("xDDDD");
+					document.close();
 				}
-				document.close(); // if tabela
+				//document.close();// if tabela
 				if (WykresKolowy.isSelected() == true) {
 					writeChartToPDF(generatePieChart(), 400, 300, "C:\\Users\\komputer\\Desktop\\sample2.pdf");
 				}
@@ -278,7 +279,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 					writeChartToPDF(generateBarChart(), 400, 300, "C:\\Users\\komputer\\Desktop\\sample3.pdf");
 				}
 				JOptionPane.showMessageDialog(null, "Plik/i zapisane/y na pulpicie! ");
-
+				
 			} //// else
 		} /// sorc==
 		if (sorc == Dodaj) {
@@ -572,11 +573,12 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
 	public static void writeChartToPDF(JFreeChart chart, int width, int height, String fileName) {
 		PdfWriter writer = null;
-
+		
 		Document document2 = new Document();
 		try {
 			writer = PdfWriter.getInstance(document2, new FileOutputStream(fileName));
 			document2.open();
+			document2.addHeader("Sample1", "Witam");
 			PdfContentByte contentByte = writer.getDirectContent();
 			PdfTemplate template = contentByte.createTemplate(width, height);
 
